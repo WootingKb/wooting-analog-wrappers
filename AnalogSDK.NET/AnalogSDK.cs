@@ -24,7 +24,9 @@ namespace AnalogSDK.NET {
         NoPlugins,
         FunctionNotFound,
         //No Keycode mapping to HID was found for the given Keycode
-        NoMapping
+        NoMapping,
+        /// Indicates that it isn't available on this platform
+        NotAvailable
 
     }
 
@@ -54,32 +56,32 @@ namespace AnalogSDK.NET {
     public static class AnalogSDK {
         public const string SdkLib = "libanalog_sdk_wrapper";
 
-        [DllImport(SdkLib, EntryPoint = "sdk_intialise")]
+        [DllImport(SdkLib, EntryPoint = "wasdk_intialise")]
         public static extern AnalogSDKError Initialise();
 
         [DllImport(SdkLib)]
-        private static extern bool sdk_is_initialised();
+        private static extern bool wasdk_is_initialised();
         
         public static bool IsInitialised
         {
-            get => sdk_is_initialised();
+            get => wasdk_is_initialised();
         }
 
-        [DllImport(SdkLib, EntryPoint = "sdk_uninitialise")]
+        [DllImport(SdkLib, EntryPoint = "wasdk_uninitialise")]
         public static extern AnalogSDKError UnInitialise();
 
-        [DllImport(SdkLib, EntryPoint = "sdk_set_mode")]
-        public static extern AnalogSDKError SetMode(KeycodeType mode);
+        [DllImport(SdkLib, EntryPoint = "wasdk_set_keycode_mode")]
+        public static extern AnalogSDKError SetKeycodeMode(KeycodeType mode);
         
         [DllImport(SdkLib)]
-        private static extern float sdk_read_analog(ushort code);
+        private static extern float wasdk_read_analog(ushort code);
         
         [DllImport(SdkLib)]
-        private static extern float sdk_read_analog_device(ushort code, ulong deviceId);
+        private static extern float wasdk_read_analog_device(ushort code, ulong deviceId);
 
         public static (float, AnalogSDKError) ReadAnalog(ushort code, ulong deviceId = 0)
         {
-            float res = sdk_read_analog_device(code, deviceId);
+            float res = wasdk_read_analog_device(code, deviceId);
             if (res >= 0)
                 return (res, AnalogSDKError.Ok);
             else
@@ -87,26 +89,26 @@ namespace AnalogSDK.NET {
         }
 
         
-        [DllImport(SdkLib, EntryPoint = "sdk_set_device_event_cb")]
+        [DllImport(SdkLib, EntryPoint = "wasdk_set_device_event_cb")]
         public static extern AnalogSDKError SetDeviceEventCallback(DeviceEventCb cb);
 
-        [DllImport(SdkLib, EntryPoint = "sdk_clear_device_event_cb")]
-        public static extern AnalogSDKError sdk_clear_device_event_cb();
+        [DllImport(SdkLib, EntryPoint = "wasdk_clear_device_event_cb")]
+        public static extern AnalogSDKError wasdk_clear_device_event_cb();
 
-        //fn sdk_device_info(buffer: *mut Void, len: c_uint) -> c_int;
-        //fn sdk_read_full_buffer(code_buffer: *mut c_ushort, analog_buffer: *mut c_float, len: c_uint) -> c_int;
+        //fn wasdk_device_info(buffer: *mut Void, len: c_uint) -> c_int;
+        //fn wasdk_read_full_buffer(code_buffer: *mut c_ushort, analog_buffer: *mut c_float, len: c_uint) -> c_int;
 
         [DllImport(SdkLib)]
-        private static extern int sdk_read_full_buffer([In][Out][MarshalAs(UnmanagedType.LPArray)] short[] codeBuffer, [In][Out][MarshalAs(UnmanagedType.LPArray)] float[] analogBuffer, uint len);
+        private static extern int wasdk_read_full_buffer([In][Out][MarshalAs(UnmanagedType.LPArray)] short[] codeBuffer, [In][Out][MarshalAs(UnmanagedType.LPArray)] float[] analogBuffer, uint len);
         
         [DllImport(SdkLib)]
-        private static extern int sdk_read_full_buffer_device([In][Out][MarshalAs(UnmanagedType.LPArray)] short[] codeBuffer, [In][Out][MarshalAs(UnmanagedType.LPArray)] float[] analogBuffer, uint len, ulong deviceID);
+        private static extern int wasdk_read_full_buffer_device([In][Out][MarshalAs(UnmanagedType.LPArray)] short[] codeBuffer, [In][Out][MarshalAs(UnmanagedType.LPArray)] float[] analogBuffer, uint len, ulong deviceID);
 
         public static (List<(short, float)>, AnalogSDKError) ReadFullBuffer(uint length, ulong deviceID = 0)
         {
             short[] codeBuffer = new short[length];
             float[] analogBuffer = new float[length];
-            int count = sdk_read_full_buffer_device(codeBuffer, analogBuffer, length, deviceID);
+            int count = wasdk_read_full_buffer_device(codeBuffer, analogBuffer, length, deviceID);
 
             if (count < 0)
                 return (null, (AnalogSDKError)count);
@@ -121,11 +123,11 @@ namespace AnalogSDK.NET {
         }
 
         [DllImport(SdkLib)]
-        private static extern int sdk_device_info([In][Out][MarshalAs(UnmanagedType.LPArray)] IntPtr[] buffer, uint len);
+        private static extern int wasdk_get_connected_devices_info([In][Out][MarshalAs(UnmanagedType.LPArray)] IntPtr[] buffer, uint len);
         
-        public static (List<DeviceInfo>, AnalogSDKError) GetDeviceInfo(){
+        public static (List<DeviceInfo>, AnalogSDKError) GetConnectedDevicesInfo(){
             IntPtr[] buffer = new IntPtr[40];
-            int count = sdk_device_info(buffer, (uint)buffer.Length);
+            int count = wasdk_get_connected_devices_info(buffer, (uint)buffer.Length);
             if (count > 0)
             {
                 return (buffer.Select<IntPtr, DeviceInfo?>((ptr) =>

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using Newtonsoft.Json;
 
-namespace AnalogSDK.NET {
+namespace WootingAnalogSDK.NET {
     public enum KeycodeType {
         HID,
         ScanCode1,
@@ -53,7 +53,7 @@ namespace AnalogSDK.NET {
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
     public delegate void DeviceEventCb(DeviceEventType eventType, IntPtr deviceInfo);
     
-    public static class AnalogSDK {
+    public static class WootingAnalogSDK {
         public const string SdkLib = "libanalog_sdk_wrapper";
 
         [DllImport(SdkLib, EntryPoint = "wasdk_intialise")]

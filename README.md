@@ -1,3 +1,3 @@
-# Analog SDK Wrappers
+# Wooting Analog Wrappers
 
-* `AnalogSDK.NET`: .NET wrapper for the Analog SDK
+* `WootingAnalogSDK.NET`: .NET wrapper for the Analog SDK

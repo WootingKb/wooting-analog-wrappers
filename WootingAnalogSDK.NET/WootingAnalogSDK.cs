@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using Newtonsoft.Json;
 
-namespace WootingAnalogSDK.NET {
+namespace WootingAnalogSDKNET {
     public enum KeycodeType {
         HID,
         ScanCode1,
@@ -56,7 +56,7 @@ namespace WootingAnalogSDK.NET {
     public static class WootingAnalogSDK {
         public const string SdkLib = "wooting_analog_wrapper";
 
-        [DllImport(SdkLib, EntryPoint = "wooting_analog_intialise")]
+        [DllImport(SdkLib, EntryPoint = "wooting_analog_initialise")]
         public static extern WootingAnalogResult Initialise();
 
         [DllImport(SdkLib)]

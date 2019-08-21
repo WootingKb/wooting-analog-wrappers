@@ -1,10 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company>Wooting</Company>
-    <PackageVersion>0.1.0-r6</PackageVersion>
+    <PackageVersion>0.1.0</PackageVersion>
     <Authors>Wooting</Authors>
     <Description>.NET Wrapper for the Wooting Analog SDK</Description>
     <PackageProjectUrl>https://github.com/WootingKb/wooting-analog-wrappers</PackageProjectUrl>
@@ -22,6 +22,7 @@
     <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'True'">True</IsLinux>
     <IsMac Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'True'">True</IsMac>
     <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
   <ItemGroup>

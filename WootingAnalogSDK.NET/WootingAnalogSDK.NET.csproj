@@ -1,12 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company>Wooting</Company>
     <PackageVersion>0.1.0</PackageVersion>
     <Authors>Wooting</Authors>
-    <Description>.NET Wrapper for the Wooting Analog SDK</Description>
+    <Description>.NET Wrapper for the new Wooting Analog SDK</Description>
     <PackageProjectUrl>https://github.com/WootingKb/wooting-analog-wrappers</PackageProjectUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryUrl>https://github.com/WootingKb/wooting-analog-wrappers</RepositoryUrl>
@@ -37,17 +37,20 @@
     <Content CopyToOutputDirectory="PreserveNewest" Pack="true" Include="..\libs\mac-x64\libwooting_analog_wrapper.dylib" Link="runtimes/mac-x64/native/libwooting_analog_wrapper.dylib">
       <PackagePath>runtimes/mac-x64/native</PackagePath>
     </Content>
-    
-  </ItemGroup>
-
-  <!--<ItemGroup Condition="'$(IsPublicBuild)' == '' AND $(IsWindows) == 'True'">
-    <Content Include="..\libs\win-x64\wooting_analog_wrapper.dll" Link="runtimes/win-x64/native/wooting_analog_wrapper.dll">
-      <PackagePath>runtimes/win-x64/native</PackagePath>
+    <Content Include="..\libs\win-x64\wooting_analog_wrapper.dll" Link="wooting_analog_wrapper.dll">
+      <Pack>true</Pack>
+      <PackagePath>content/net461;contentFiles/any/net461</PackagePath>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(IsPublicBuild)' == '' AND $(IsLinux) == 'True'">
+  <ItemGroup Condition="'$(TargetFramework)'=='net461'">
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+    
+  </ItemGroup>
+
+  <!--<ItemGroup Condition="'$(IsPublicBuild)' == '' AND $(IsLinux) == 'True'">
     <Content Include="..\libs\linux-x64\libwooting_analog_wrapper.so" Link="runtimes/linux-x64/native/libwooting_analog_wrapper.so">
       <PackagePath>runtimes/linux-x64/native</PackagePath>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -50,14 +50,31 @@ namespace WootingAnalogSDKNET {
         }
     }
 
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate void DeviceEventCb(DeviceEventType eventType, IntPtr deviceInfo);
+    public delegate void DeviceEventHandler(DeviceEventType eventType, DeviceInfo deviceInfo);
     
     public static class WootingAnalogSDK {
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        private delegate void RawDeviceEventCb(DeviceEventType eventType, IntPtr deviceInfo);
+
         public const string SdkLib = "wooting_analog_wrapper";
 
         [DllImport(SdkLib, EntryPoint = "wooting_analog_initialise")]
-        public static extern WootingAnalogResult Initialise();
+        private static extern int initialise();
+
+        public static (int, WootingAnalogResult) Initialise() {
+            int initResult = initialise();
+            if (initResult >= 0) {
+                WootingAnalogResult eventSetResult = setDeviceEventCallback(_internalCallback);
+                if (eventSetResult == WootingAnalogResult.Ok) {
+                    return (initResult, WootingAnalogResult.Ok);
+                }
+                else {
+                    throw new Exception("Wooting Analog SDK was initialised successfully, but the event handler could not be set!");
+                }
+            } else {
+                return (-1, (WootingAnalogResult)initResult);
+            }
+        }
 
         [DllImport(SdkLib)]
         private static extern bool wooting_analog_is_initialised();
@@ -90,10 +107,23 @@ namespace WootingAnalogSDKNET {
 
         
         [DllImport(SdkLib, EntryPoint = "wooting_analog_set_device_event_cb")]
-        public static extern WootingAnalogResult SetDeviceEventCallback(DeviceEventCb cb);
+        private static extern WootingAnalogResult setDeviceEventCallback(RawDeviceEventCb cb);
+
+        public static event DeviceEventHandler DeviceEvent;
+
+        
+        private static RawDeviceEventCb _internalCallback = new RawDeviceEventCb(internalCallback);
+        private static void internalCallback(DeviceEventType eventType, IntPtr deviceInfo) {
+            Console.WriteLine("Internal callback");
+            var dev = (DeviceInfo)Marshal.PtrToStructure(
+                            deviceInfo,
+                            typeof(DeviceInfo));
+            DeviceEvent?.Invoke(eventType, dev);
+        }
+
 
         [DllImport(SdkLib, EntryPoint = "wooting_analog_clear_device_event_cb")]
-        public static extern WootingAnalogResult wooting_analog_clear_device_event_cb();
+        private static extern WootingAnalogResult wooting_analog_clear_device_event_cb();
 
         //fn wooting_analog_device_info(buffer: *mut Void, len: c_uint) -> c_int;
         //fn wooting_analog_read_full_buffer(code_buffer: *mut c_ushort, analog_buffer: *mut c_float, len: c_uint) -> c_int;

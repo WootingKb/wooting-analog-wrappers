@@ -15,18 +15,26 @@ namespace WootingAnalogSDKNET {
     
     public enum WootingAnalogResult  {
         Ok = 1,
+        /// Item hasn't been initialized
         UnInitialized = -2000,
+        /// No Devices are connected
         NoDevices,
+        /// Device has been disconnected
         DeviceDisconnected,
-        //Generic Failure
+        /// Generic Failure
         Failure,
+        /// A given parameter was invalid
         InvalidArgument,
+        /// No Plugins were found
         NoPlugins,
+        /// The specified function was not found in the library
         FunctionNotFound,
-        //No Keycode mapping to HID was found for the given Keycode
+        /// No Keycode mapping to HID was found for the given Keycode
         NoMapping,
         /// Indicates that it isn't available on this platform
-        NotAvailable
+        NotAvailable,
+        /// Indicates that the operation that is trying to be used is for an older version
+        IncompatibleVersion,
 
     }
 

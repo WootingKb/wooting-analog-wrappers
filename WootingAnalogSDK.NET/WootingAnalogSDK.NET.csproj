@@ -1,10 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company>Wooting</Company>
-    <PackageVersion>0.4.0</PackageVersion>
+    <PackageVersion>0.4.1</PackageVersion>
     <Authors>Wooting</Authors>
     <Description>.NET Wrapper for the new Wooting Analog SDK</Description>
     <PackageProjectUrl>https://github.com/WootingKb/wooting-analog-wrappers</PackageProjectUrl>

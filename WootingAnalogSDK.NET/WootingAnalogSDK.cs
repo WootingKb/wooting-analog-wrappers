@@ -38,6 +38,15 @@ namespace WootingAnalogSDKNET {
 
     }
 
+    public enum DeviceType  {
+        /// Device is of type Keyboard
+        Keyboard = 1,
+        /// Device is of type Keypad
+        Keypad,
+        /// Device
+        Other
+    }
+
     public enum DeviceEventType  {
         Connected = 1,
         Disconnected
@@ -50,6 +59,7 @@ namespace WootingAnalogSDKNET {
         public readonly string manufacturer_name;
         public readonly string device_name;
         public readonly ulong device_id;
+        public readonly DeviceType device_type;
 
         public override string ToString()
         {

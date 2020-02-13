@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Company>Wooting</Company>
-    <PackageVersion>0.4.1</PackageVersion>
+    <PackageVersion>0.4.2</PackageVersion>
     <Authors>Wooting</Authors>
     <Description>.NET Wrapper for the new Wooting Analog SDK</Description>
     <PackageProjectUrl>https://github.com/WootingKb/wooting-analog-wrappers</PackageProjectUrl>

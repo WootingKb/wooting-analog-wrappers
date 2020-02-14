@@ -53,17 +53,16 @@ namespace analog_test
                         // We want to put on the new line character only if keys have been read and output to the console
                         if (keys.Count > 0)
                             Console.WriteLine();
-                        
-                        // We want to have a bit of a delay so we don't spam the console with new values
-                        Thread.Sleep(20);
                     }
                     else
                     {
                         Console.WriteLine($"Read failed with {readErr}");
+			// We want to put more of a delay in when we get an error as we don't want to spam the log with the errors
+			Thread.Sleep(1000);
                     }
 
                     // We want to have a bit of a delay so we don't spam the console with new values
-                    Thread.Sleep(1000);
+                    Thread.Sleep(100);
                 }
             }			
             else {

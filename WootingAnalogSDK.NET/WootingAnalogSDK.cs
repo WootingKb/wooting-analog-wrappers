@@ -7,48 +7,108 @@ using Newtonsoft.Json;
 
 namespace WootingAnalogSDKNET {
     public enum KeycodeType {
+        /// <summary>
+        /// USB HID Keycodes https://www.usb.org/document-library/hid-usage-tables-112 pg53
+        /// </summary>
         HID,
+        /// <summary>
+        /// Scan code set 1
+        /// </summary>
         ScanCode1,
+        /// <summary>
+        /// Windows Virtual Keys
+        /// </summary>
         VirtualKey,
+        /// <summary>
+        /// Windows Virtual Keys which are translated to the current keyboard locale
+        /// </summary>
         VirtualKeyTranslate
     }    
     
     public enum WootingAnalogResult  {
+        /// <summary>
+        /// Success
+        /// </summary>
         Ok = 1,
+
+        /// <summary>
         /// Item hasn't been initialized
+        /// </summary>
         UnInitialized = -2000,
+
+        /// <summary>
         /// No Devices are connected
+        /// </summary>
         NoDevices,
+
+        /// <summary>
         /// Device has been disconnected
+        /// </summary>
         DeviceDisconnected,
+
+        /// <summary>
         /// Generic Failure
+        /// </summary>
         Failure,
+
+        /// <summary>
         /// A given parameter was invalid
+        /// </summary>
         InvalidArgument,
+
+        /// <summary>
         /// No Plugins were found
+        /// </summary>
         NoPlugins,
+
+        /// <summary>
         /// The specified function was not found in the library
+        /// </summary>
         FunctionNotFound,
+
+        /// <summary>
         /// No Keycode mapping to HID was found for the given Keycode
+        /// </summary>
         NoMapping,
+
+        /// <summary>
         /// Indicates that it isn't available on this platform
+        /// </summary>
         NotAvailable,
+
+        /// <summary>
         /// Indicates that the operation that is trying to be used is for an older version
+        /// </summary>
         IncompatibleVersion,
 
     }
 
     public enum DeviceType  {
+        /// <summary>
         /// Device is of type Keyboard
+        /// </summary>
         Keyboard = 1,
+
+        /// <summary>
         /// Device is of type Keypad
+        /// </summary>
         Keypad,
-        /// Device
+
+        /// <summary>
+        /// Other type of device
+        /// </summary>
         Other
     }
 
     public enum DeviceEventType  {
+        /// <summary>
+        /// Device has been connected
+        /// </summary>
         Connected = 1,
+
+        /// <summary>
+        /// Device has been disconnected
+        /// </summary>
         Disconnected
     }
     

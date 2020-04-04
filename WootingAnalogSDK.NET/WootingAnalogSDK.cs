@@ -81,6 +81,11 @@ namespace WootingAnalogSDKNET {
         /// </summary>
         IncompatibleVersion,
 
+        /// <summary>
+        /// Indicates that the Analog SDK could not be found on the system
+        /// </summary>
+        DLLNotFound
+
     }
 
     public enum DeviceType  {

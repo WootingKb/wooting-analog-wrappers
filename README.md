@@ -2,4 +2,6 @@
 
 # Wooting Analog Wrappers
 
-* `WootingAnalogSDK.NET`: .NET wrapper for the Analog SDK
+- [`WootingAnalogSDK.NET`](WootingAnalogSDK.NET): .NET wrapper for the Analog SDK
+
+This repo contains the .NET wrapper for the [`wooting-analog-sdk`](http://github.com/WootingKb/wooting-analog-sdk). For examples look in the [`examples`](examples) directory, which contains a guide for using the .NET Library as well as a full example project from the guide

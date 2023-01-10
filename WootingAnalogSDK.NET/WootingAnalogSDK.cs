@@ -351,6 +351,8 @@ namespace WootingAnalogSDKNET {
                     return null;
                 }).Where(s => s != null).Cast<DeviceInfo>().ToList(), WootingAnalogResult.Ok);
             }
+            if (count == 0)
+                return (new List<DeviceInfo>(), WootingAnalogResult.Ok);
             else
                 return (new List<DeviceInfo>(), (WootingAnalogResult)count);
         }
